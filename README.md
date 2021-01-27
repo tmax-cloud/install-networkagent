@@ -164,6 +164,44 @@ Step 2. Hypernet-Local-Agent 설치
 	        kubectl apply -f hypernet-local-agent.yaml
 	    ```
 	
+## 삭제 가이드
+Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운로드한 yaml 파일들 및 iptables 룰을 정리한다.
 
+* Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리
+	* default-ipv4-ippool.yaml 파일 내부의 natOutgoing 값을 true로 변경
+	* default-ipv4-ippool.yaml 파일 적용
+		```bash
+		cat default-ipv4-ippool.yaml | calicoctl delete -f -
+		```
+	* 이전에 생성한 public-ipv4-ippool.yaml을 이용해 이전 상태로 롤백 진행
+		```bash
+		cat public-ipv4-ippool.yaml | calicoctl delete -f -
+		```
+	* Hypernet-Local-Agent 삭제
+		```bash
+		kubectl delete -f hypernet-local-agent.yaml
+		```
 
+* 이전에 다운로드한 yaml 파일들 정리
+	```bash
+	rm hypernet-local-agent.yaml
+	rm default-ipv4-ippool.yaml
+	rm public-ipv4-ippool.yaml
+	```
 
+* iptables 룰 정리
+	* Chain 내부의 룰 정리
+	    ```bash
+	        iptables -t nat -F HYPERNET-PREROUTING
+			iptables -t nat -F HYPERNET-POSTROUTING
+			iptables -t nat -F HYPERNET-OUTPUT
+	    ```
+	* Chain 정리 
+	    ```bash
+	        iptables -t nat -D PREROUTING -m comment --comment "Hypernet-local-agent prerouting rules" -j HYPERNET-PREROUTING
+			iptables -t nat -D POSTROUTING -m comment --comment "Hypernet-local-agent POSTROUTING rules" -j HYPERNET-POSTROUTING
+			iptables -t nat -D OUTPUT -m comment --comment "Hypernet-local-agent OUTPUT rules" -j HYPERNET-OUTPUT
+			iptables -nat -X HYPERNET-PREROUTING
+			iptables -nat -X HYPERNET-POSTROUTING
+			iptables -nat -X HYPERNET-OUTPUT
+	    ```
