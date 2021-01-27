@@ -192,16 +192,16 @@ Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운
 * iptables 룰 정리
 	* Chain 내부의 룰 정리
 	    ```bash
-	        iptables -t nat -F HYPERNET-PREROUTING
-			iptables -t nat -F HYPERNET-POSTROUTING
-			iptables -t nat -F HYPERNET-OUTPUT
+		iptables -t nat -F HYPERNET-PREROUTING
+		iptables -t nat -F HYPERNET-POSTROUTING
+		iptables -t nat -F HYPERNET-OUTPUT
 	    ```
 	* Chain 정리 
 	    ```bash
-	        iptables -t nat -D PREROUTING -m comment --comment "Hypernet-local-agent prerouting rules" -j HYPERNET-PREROUTING
-			iptables -t nat -D POSTROUTING -m comment --comment "Hypernet-local-agent POSTROUTING rules" -j HYPERNET-POSTROUTING
-			iptables -t nat -D OUTPUT -m comment --comment "Hypernet-local-agent OUTPUT rules" -j HYPERNET-OUTPUT
-			iptables -nat -X HYPERNET-PREROUTING
-			iptables -nat -X HYPERNET-POSTROUTING
-			iptables -nat -X HYPERNET-OUTPUT
+		iptables -t nat -D PREROUTING -m comment --comment "Hypernet-local-agent prerouting rules" -j HYPERNET-PREROUTING
+		iptables -t nat -D POSTROUTING -m comment --comment "Hypernet-local-agent POSTROUTING rules" -j HYPERNET-POSTROUTING
+		iptables -t nat -D OUTPUT -m comment --comment "Hypernet-local-agent OUTPUT rules" -j HYPERNET-OUTPUT
+		iptables -nat -X HYPERNET-PREROUTING
+		iptables -nat -X HYPERNET-POSTROUTING
+		iptables -nat -X HYPERNET-OUTPUT
 	    ```
