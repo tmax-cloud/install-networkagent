@@ -171,7 +171,7 @@ Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운
 	* default-ipv4-ippool.yaml 파일 내부의 natOutgoing 값을 true로 변경
 	* default-ipv4-ippool.yaml 파일 적용
 		```bash
-		cat default-ipv4-ippool.yaml | calicoctl delete -f -
+		cat default-ipv4-ippool.yaml | calicoctl replace -f -
 		```
 	* 이전에 생성한 public-ipv4-ippool.yaml을 이용해 이전 상태로 롤백 진행
 		```bash
