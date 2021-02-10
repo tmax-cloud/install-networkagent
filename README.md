@@ -4,8 +4,6 @@
 ## 구성 요소 및 버전
 * Hypernet-Local-Agent([tmaxcloudck/hypernet-local-agent:v0.4.2](https://hub.docker.com/repository/docker/tmaxcloudck/hypernet-local-agent))
 
-### Upgrade
-* [기존 Version에서 새로운 Version으로의 Upgrade는 이 링크를 참고해주세요.](https://github.com/tmax-cloud/hypercloud-install-guide/blob/master/NetworkAgent/UPGRADE.md)
 ## Prerequisites
 1. Kubernetest ( 1.15.0 <= )
 2. Calico ( 3.13.4 <= )
@@ -14,7 +12,7 @@
 3. Calicoctl ( 3.15.0 <= )
 4. Network Webhook (0.1.1 <= )
     * 시스템 Pod들이 Static IP Pool Resource로 부터 자동 할당받지 않기 위해서 필요한 Component입니다.
-    * [설치 가이드](https://github.com/tmax-cloud/hypercloud-install-guide/blob/master/NetworkAgent/Network%20Webhook/README.md)
+    * [설치 가이드](https://github.com/tmax-cloud/install-networkwebhook/blob/4.1/README.md)
 
 ## 폐쇄망 설치 가이드
 설치를 진행하기 전 아래의 과정을 통해 필요한 이미지 및 yaml 파일을 준비한다.
@@ -164,6 +162,44 @@ Step 2. Hypernet-Local-Agent 설치
 	        kubectl apply -f hypernet-local-agent.yaml
 	    ```
 	
+## 삭제 가이드
+Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운로드한 yaml 파일들 및 iptables 룰을 정리한다.
 
+* Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리
+	* default-ipv4-ippool.yaml 파일 내부의 natOutgoing 값을 true로 변경
+	* default-ipv4-ippool.yaml 파일 적용
+		```bash
+		cat default-ipv4-ippool.yaml | calicoctl replace -f -
+		```
+	* 이전에 생성한 public-ipv4-ippool.yaml을 이용해 이전 상태로 롤백 진행
+		```bash
+		cat public-ipv4-ippool.yaml | calicoctl delete -f -
+		```
+	* Hypernet-Local-Agent 삭제
+		```bash
+		kubectl delete -f hypernet-local-agent.yaml
+		```
 
+* 이전에 다운로드한 yaml 파일들 정리
+	```bash
+	rm hypernet-local-agent.yaml
+	rm default-ipv4-ippool.yaml
+	rm public-ipv4-ippool.yaml
+	```
 
+* iptables 룰 정리
+	* Chain 내부의 룰 정리
+	    ```bash
+		iptables -t nat -F HYPERNET-PREROUTING
+		iptables -t nat -F HYPERNET-POSTROUTING
+		iptables -t nat -F HYPERNET-OUTPUT
+	    ```
+	* Chain 정리 
+	    ```bash
+		iptables -t nat -D PREROUTING -m comment --comment "Hypernet-local-agent prerouting rules" -j HYPERNET-PREROUTING
+		iptables -t nat -D POSTROUTING -m comment --comment "Hypernet-local-agent POSTROUTING rules" -j HYPERNET-POSTROUTING
+		iptables -t nat -D OUTPUT -m comment --comment "Hypernet-local-agent OUTPUT rules" -j HYPERNET-OUTPUT
+		iptables -nat -X HYPERNET-PREROUTING
+		iptables -nat -X HYPERNET-POSTROUTING
+		iptables -nat -X HYPERNET-OUTPUT
+	    ```
