@@ -12,7 +12,7 @@
 3. Calicoctl ( 3.15.0 <= )
 4. Network Webhook (0.1.1 <= )
     * 시스템 Pod들이 Static IP Pool Resource로 부터 자동 할당받지 않기 위해서 필요한 Component입니다.
-    * [설치 가이드](https://github.com/tmax-cloud/install-networkwebhook/README.md)
+    * [설치 가이드](https://github.com/tmax-cloud/install-networkwebhook/blob/4.1/README.md)
 
 ## 폐쇄망 설치 가이드
 설치를 진행하기 전 아래의 과정을 통해 필요한 이미지 및 yaml 파일을 준비한다.
