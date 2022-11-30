@@ -52,7 +52,7 @@
 Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 Skip)
 </h2>
 
-* 목적 : `Static IP 사용을 위한 Public 대역 IP Pool 설정`
+* 목적 : `default ipool 외 다른 ippool 대역 사용을 위한 설정`
 * 생성 순서 : 
     * Default IPPool 설정
 	    * 아래의 commnad를 이용해 현재 설정된 default-ipv4-ippool 설정을 조회하고 변경
