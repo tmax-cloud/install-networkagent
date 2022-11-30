@@ -58,9 +58,9 @@ Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 
 	    * 아래의 commnad를 이용해 현재 설정된 default-ipv4-ippool 설정을 조회하고 변경
 	    ```bash
 		kubectl get ippool/default-ipv4-ippool -o yaml > tmp.yaml
-		cat tmp.yaml | awk '/^apiVersion/' > default-ipv4-ippool.yaml && sed -i '/^apiVersion/d' tmp.yaml
-		cat tmp.yaml | awk '/^kind/' >> default-ipv4-ippool.yaml && sed -i '/^kind/d' tmp.yaml
-		cat tmp.yaml | awk '/^metadata/' >> default-ipv4-ippool.yaml && sed -i '/^metadata/d' tmp.yaml
+		cat tmp.yaml | awk '/^apiVersion/' > default-ipv4-ippool.yaml 
+		cat tmp.yaml | awk '/^kind/' >> default-ipv4-ippool.yaml 
+		cat tmp.yaml | awk '/^metadata/' >> default-ipv4-ippool.yaml 
 		cat tmp.yaml | awk '/^\ \ name/' >> default-ipv4-ippool.yaml
 		cat tmp.yaml | awk '/^spec/,EOF' >> default-ipv4-ippool.yaml
 		sed -i 's/crd.projectcalico.org\/v1/projectcalico.org\/v3/' default-ipv4-ippool.yaml
@@ -86,23 +86,17 @@ Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 
 		```
 		* [주의]위 과정을 적용하는 순간 Pod들의 인터넷이 끊기게 되며 Network Agent 설치가 완료 되면 정상화 됨
 
-    * Public IP Pool 설정 
-	    * Static IP를 사용하기 위해 Public IP Pool을 생성해야하며 아래 Command를 통해 template 다운로드
+    * default ipool 외 다른 IP Pool 설정 
+	    * Static IP를 사용하기 위해 default ipool 외 다른 IP Pool을 생성해야하며 아래 Command를 통해 template 다운로드
 		```bash
-			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/public-ipv4-ippool.yaml > public-ipv4-ippool.yaml
+			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
 		```
-		* public-ipv4-ippool.yaml 내부 내용을 아래를 참고하여 수정
-	    	* Static IP용 네트워크 대역을 결정 (메탈엘비 대역이랑 겹치면 문제 발생)
-		    	* ex) 172.22.8.180, 172.22.8.181 => 172.22.8.180/31
-		    	* ex) 172.22.8.180, 181, 182, 183 => 172.22.8.180/30
-		    	* [주의] 호스트 대역이랑 겹치면 통신이 끊길 수 있음
-		    	* 대역에 관해서 문의해주시면 확인해드립니다
-				* 결정한 대역을 CIDR 환경변수에 할당([주의] 결정한 대역 10.0.0.0/16 일 경우 10.0.0.0\\/16로 사용할것
-				* [예시] 네트워크 대역을 10.0.0.0/16으로 결정한 경우
-				```bash
-					export CIDR=10.0.0.0\\/16
-				```
-
+		* additional-ipv4-ippool.yaml 내부 내용을 아래를 참고하여 수정
+			* 결정한 대역을 CIDR 환경변수에 할당([주의] 결정한 대역 10.0.0.0/16 일 경우 10.0.0.0\\/16로 사용할것
+			* [예시] 네트워크 대역을 10.0.0.0/16으로 결정한 경우
+			```bash
+				export CIDR=10.0.0.0\\/16
+			```
 			* Static IP용 네트워크 대역의 blocksize 결정
 			    * Blocksize은 cidr로 결정된 network 대역을 다수의 subnet 단위로 쪼갤때 사용되며 각 subnet은 node에 차례로 할당됨
 				* Blocksize의 값은 subnetMask 값
@@ -115,14 +109,14 @@ Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 
 				```bash
 					export BLOCKSIZE=20
 				```
-			* 결정한 네트워크 대역과 Blocksize를 public-ipv4-ippool.yaml에 적용
+			* 결정한 네트워크 대역과 Blocksize를 additional-ipv4-ippool.yaml에 적용
 			```bash
-				sed -i 's/CIDR/'${CIDR}'/g' public-ipv4-ippool.yaml
-				sed -i 's/BLOCKSIZE/'${BLOCKSIZE}'/g' public-ipv4-ippool.yaml
+				sed -i 's/CIDR/'${CIDR}'/g' additional-ipv4-ippool.yaml
+				sed -i 's/BLOCKSIZE/'${BLOCKSIZE}'/g' additional-ipv4-ippool.yaml
 			```
-		* public-ipv4-ippool.yaml의 내용을 아래 커맨드를 통해 Calico에 적용
+		* additional-ipv4-ippool.yaml의 내용을 아래 커맨드를 통해 Calico에 적용
 		```bash
-			cat public-ipv4-ippool.yaml | calicoctl create -f -
+			cat additional-ipv4-ippool.yaml | calicoctl create -f -
 		```
 
 <h2 id="step1">
