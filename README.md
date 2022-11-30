@@ -27,7 +27,7 @@
     ```bash
     $ sudo docker pull tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION}
     $ sudo docker save tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION} > hypernet-local-agent_${HYPERNET_LOCAL_AGENT_VERSION}.tar
-	$ curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/public-ipv4-ippool.yaml > public-ipv4-ippool.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
 	$ curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/floatingIp.yaml > floatingIp.yaml
 	$ curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/hypernet-local-agent.yaml > hypernet-local-agent.yaml
     ```
@@ -165,9 +165,9 @@ Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운
 		```bash
 		cat default-ipv4-ippool.yaml | calicoctl replace -f -
 		```
-	* 이전에 생성한 public-ipv4-ippool.yaml을 이용해 이전 상태로 롤백 진행
+	* 이전에 생성한 additional-ipv4-ippool.yaml을 이용해 이전 상태로 롤백 진행
 		```bash
-		cat public-ipv4-ippool.yaml | calicoctl delete -f -
+		cat additional-ipv4-ippool.yaml | calicoctl delete -f -
 		```
 	* Hypernet-Local-Agent 삭제
 		```bash
@@ -178,7 +178,7 @@ Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운
 	```bash
 	rm hypernet-local-agent.yaml
 	rm default-ipv4-ippool.yaml
-	rm public-ipv4-ippool.yaml
+	rm additional-ipv4-ippool.yaml
 	```
 
 * iptables 룰 정리
