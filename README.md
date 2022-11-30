@@ -27,9 +27,9 @@
     ```bash
     $ sudo docker pull tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION}
     $ sudo docker save tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION} > hypernet-local-agent_${HYPERNET_LOCAL_AGENT_VERSION}.tar
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/floatingIp.yaml > floatingIp.yaml
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/hypernet-local-agent.yaml > hypernet-local-agent.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/4.1/manifests/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/4.1/manifests/floatingIp.yaml > floatingIp.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/4.1/manifests/hypernet-local-agent.yaml > hypernet-local-agent.yaml
     ```
 
 2. 위의 과정에서 생성한 tar 파일들을 폐쇄망 환경으로 이동시킨 뒤 사용하려는 registry에 이미지를 push한다.
