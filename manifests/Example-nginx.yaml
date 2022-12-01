@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: my-nginx
   annotations:
-    "cni.projectcalico.org/ipv4pools": "[\"public-ipv4-ippool\"]"
+    "cni.projectcalico.org/ipv4pools": "[\"additional-ipv4-ippool\"]"
 #    "cni.projectcalico.org/ipAddrs": "[\"10.0.0.193\"]"     
 #    "NatIP": "[\"10.0.0.10\"]"
 spec:
