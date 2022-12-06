@@ -136,7 +136,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: my-hypernet-local-agent
-        image: tmaxcloudck/hypernet-local-agent:0.4.2
+        image: tmaxcloudck/hypernet-local-agent:0.4.3-dev
         securityContext:
           privileged: true
         env:
@@ -148,6 +148,9 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
+        # Method List : "interface=", "cidr=", "host", "all"
+        - name: AUTODETECTION_METHOD
+          value: "interface=eno*"
 #        - name: POD_IPPOOL_NAME
 #          value: "default-ipv4-ippool"
         resources:
