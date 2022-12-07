@@ -144,7 +144,7 @@ Step 2. Hypernet-Local-Agent 설치
 
 * 목적 : `Hypernet-Local-Agent 설치`
 * 생성 순서 : 
-    *  hypernet-local-agent.yaml 설정
+    hypernet-local-agent.yaml 설정
             * `ex) kubectl apply -f hypernet-local-agent.yaml`
             * Pod들이 사용하는 IP 대역의 Pool 이름 확인
 	    ```bash
@@ -155,6 +155,30 @@ Step 2. Hypernet-Local-Agent 설치
 	    ```bash
 	        kubectl apply -f hypernet-local-agent.yaml
 	    ```
+## 사용 가이드
+<h5> ProxyArp를 위한 인터페이스 설정 방법</h5>
+
+* 목적 : Multi NIC 환경에서 ProxyARP를 수행하고자 하는 인터페이스를 선택하기 위함
+* 사용법 :	hypernet-local-agent.yaml 파일에서 환경변수 값 "AUTODETECTION_METHOD"을 설정
+	1. 인터페이스 이름 기반 value에 "interface=" 활용
+		예시) "eno"로 시작하는 인터페이스 선택, 복수 선택 가능
+		- name: AUTODETECTION_METHOD
+			value: "interface=eno*"
+		- name: AUTODETECTION_METHOD
+			value: "interface=eno*,enp2s*,eth0"
+
+	2. CIDR 기반 value에 "cidr=" 활용, multi cidr 지원x
+		예시) 10.0.0.0/16 네트워크에 속한 ip를 갖는 인터페이스 선택, 복수 선택 불가능
+		- name: AUTODETECTION_METHOD
+		value: "cidr=10.0.0.0/16"
+	3. 기존과 동일하게 K8S host의 ip 동작. value에 "host" 활용
+		예시)
+		- name: AUTODETECTION_METHOD
+		  value: "host"
+	4. 모든 인터페이스에 적용하고자 하는경우, value에 "all" 활용
+		- name: AUTODETECTION_METHOD
+		  value: "all"
+
 	
 ## 삭제 가이드
 Kubernetes 상의 Hypernet-Local-Agent 관련 자료 정리 및 이전에 다운로드한 yaml 파일들 및 iptables 룰을 정리한다.
