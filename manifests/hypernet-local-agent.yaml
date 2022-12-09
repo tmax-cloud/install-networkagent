@@ -136,7 +136,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: my-hypernet-local-agent
-        image: tmaxcloudck/hypernet-local-agent:0.5.1
+        image: tmaxcloudck/hypernet-local-agent:v0.5.2
         securityContext:
           privileged: true
         command: ["/root/agent"]
@@ -151,6 +151,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.hostIP
+        - name: HYPERNET_LOCAL_AGENT_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         # Method List : "interface=", "cidr=", "host", "all"
         - name: AUTODETECTION_METHOD
           value: "interface=eno*"
