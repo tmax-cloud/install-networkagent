@@ -139,6 +139,9 @@ spec:
         image: tmaxcloudck/hypernet-local-agent:0.4.3-dev
         securityContext:
           privileged: true
+        command: ["/root/agent"]
+        # -v=0 or -v=1
+        args: ["-v=1"] 
         env:
         - name: HYPERNET_LOCAL_AGENT_NODE_NAME
           valueFrom:

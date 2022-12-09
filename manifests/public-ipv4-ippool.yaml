@@ -1,7 +1,7 @@
 apiVersion: projectcalico.org/v3
 kind: IPPool
 metadata:
-  name: additional-ipv4-ippool
+  name: public-ipv4-ippool
 spec:
   cidr: CIDR
   blockSize: BLOCKSIZE
