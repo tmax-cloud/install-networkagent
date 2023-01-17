@@ -2,7 +2,7 @@
 # NetworkAgent 설치 가이드
 
 ## 구성 요소 및 버전
-* Hypernet-Local-Agent([tmaxcloudck/hypernet-local-agent:v0.5.2](https://hub.docker.com/repository/docker/tmaxcloudck/hypernet-local-agent))
+* Hypernet-Local-Agent([tmaxcloudck/hypernet-local-agent:v0.4.2](https://hub.docker.com/repository/docker/tmaxcloudck/hypernet-local-agent))
 
 ## Prerequisites
 1. Kubernetest ( 1.15.0 <= )
@@ -19,7 +19,7 @@
 1. **폐쇄망에서 설치하는 경우** 사용하는 image repository에 Agent 설치 시 필요한 이미지를 push한다.     
     * 작업 디렉토리 생성 및 환경 설정(REGISTRY에는 각 환경에 맞는 IP:PORT 입력)
     ```bash
-    $ export HYPERNET_LOCAL_AGENT_VERSION=v0.5.2
+    $ export HYPERNET_LOCAL_AGENT_VERSION=0.4.2
 	$ export REGISTRY=172.22.8.106:5000
     ```
 
@@ -27,9 +27,9 @@
     ```bash
     $ sudo docker pull tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION}
     $ sudo docker save tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION} > hypernet-local-agent_${HYPERNET_LOCAL_AGENT_VERSION}.tar
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.1/manifests/public-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.1/manifests/floatingIp.yaml > floatingIp.yaml
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.1/manifests/hypernet-local-agent.yaml > hypernet-local-agent.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/floatingIp.yaml > floatingIp.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/hypernet-local-agent.yaml > hypernet-local-agent.yaml
     ```
 
 2. 위의 과정에서 생성한 tar 파일들을 폐쇄망 환경으로 이동시킨 뒤 사용하려는 registry에 이미지를 push한다.
