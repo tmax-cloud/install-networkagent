@@ -128,7 +128,7 @@ Step 1. IPPool 설정(Floating IP 전용. Floating IP를 사용하지 않을 경
     * ConfigMap 생성
 		* 사용하려는 Floating IP들을 정의할 configMap 생성 yaml 다운로드
 		```bash
-			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/floatingIp.yaml > floatingIp.yaml
+			curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.1/manifests/floatingIp.yaml > floatingIp.yaml
 		```
         * floatingIp.yaml 의 NatIpList 에 사용할 public IP 기입
 		* [주의] 실제 미사용중이며 Floating IP로 할당 받은 IP만 기재, 현재 대역에 대해선 기입 불가능
