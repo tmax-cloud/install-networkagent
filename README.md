@@ -89,7 +89,7 @@ Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 
     * default ipool 외 다른 IP Pool 설정 
 	    * Static IP를 사용하기 위해 default ipool 외 다른 IP Pool을 생성해야하며 아래 Command를 통해 template 다운로드
 		```bash
-			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
+			curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.1/manifests/public-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
 		```
 		* additional-ipv4-ippool.yaml 내부 내용을 아래를 참고하여 수정
 			* 결정한 대역을 CIDR 환경변수에 할당([주의] 결정한 대역 10.0.0.0/16 일 경우 10.0.0.0\\/16로 사용할것
