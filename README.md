@@ -2,7 +2,7 @@
 # NetworkAgent 설치 가이드
 
 ## 구성 요소 및 버전
-* Hypernet-Local-Agent([tmaxcloudck/hypernet-local-agent:v0.4.2](https://hub.docker.com/repository/docker/tmaxcloudck/hypernet-local-agent))
+* Hypernet-Local-Agent([tmaxcloudck/hypernet-local-agent:v0.5.2](https://hub.docker.com/repository/docker/tmaxcloudck/hypernet-local-agent))
 
 ## Prerequisites
 1. Kubernetest ( 1.15.0 <= )
@@ -19,7 +19,7 @@
 1. **폐쇄망에서 설치하는 경우** 사용하는 image repository에 Agent 설치 시 필요한 이미지를 push한다.     
     * 작업 디렉토리 생성 및 환경 설정(REGISTRY에는 각 환경에 맞는 IP:PORT 입력)
     ```bash
-    $ export HYPERNET_LOCAL_AGENT_VERSION=0.4.2
+    $ export HYPERNET_LOCAL_AGENT_VERSION=v0.5.2
 	$ export REGISTRY=172.22.8.106:5000
     ```
 
@@ -27,7 +27,7 @@
     ```bash
     $ sudo docker pull tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION}
     $ sudo docker save tmaxcloudck/hypernet-local-agent:${HYPERNET_LOCAL_AGENT_VERSION} > hypernet-local-agent_${HYPERNET_LOCAL_AGENT_VERSION}.tar
-	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
+	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/public-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
 	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/floatingIp.yaml > floatingIp.yaml
 	$ curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/hypernet-local-agent.yaml > hypernet-local-agent.yaml
     ```
@@ -89,7 +89,7 @@ Step 0. IPPool 설정(Static IP 전용. Static IP를 사용하지 않을 경우 
     * default ipool 외 다른 IP Pool 설정 
 	    * Static IP를 사용하기 위해 default ipool 외 다른 IP Pool을 생성해야하며 아래 Command를 통해 template 다운로드
 		```bash
-			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/additional-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
+			curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/public-ipv4-ippool.yaml > additional-ipv4-ippool.yaml
 		```
 		* additional-ipv4-ippool.yaml 내부 내용을 아래를 참고하여 수정
 			* 결정한 대역을 CIDR 환경변수에 할당([주의] 결정한 대역 10.0.0.0/16 일 경우 10.0.0.0\\/16로 사용할것
@@ -128,7 +128,7 @@ Step 1. IPPool 설정(Floating IP 전용. Floating IP를 사용하지 않을 경
     * ConfigMap 생성
 		* 사용하려는 Floating IP들을 정의할 configMap 생성 yaml 다운로드
 		```bash
-			curl https://raw.githubusercontent.com/tmax-cloud/hypercloud-install-guide/master/NetworkAgent/floatingIp.yaml > floatingIp.yaml
+			curl https://raw.githubusercontent.com/tmax-cloud/install-networkagent/5.0/manifests/floatingIp.yaml > floatingIp.yaml
 		```
         * floatingIp.yaml 의 NatIpList 에 사용할 public IP 기입
 		* [주의] 실제 미사용중이며 Floating IP로 할당 받은 IP만 기재, 현재 대역에 대해선 기입 불가능
